@@ -1,0 +1,30 @@
+NOTES
+========
+ApiResponse apiResponse = new ApiResponse("User Successfully Deleted with username :" + username, LocalDateTime.now(),
+HttpStatus.OK,HttpStatus.OK.value());
+
+Used Status Codes
+401 UNAUTHORIZED : When invalid credentials are passed
+409 CONFLICT : When resource already exists
+404 NOTFOUND : When resource not found
+201 CREATED : When new resource is created.
+
+
+//URLS FOR USER
+POST - http://localhost:8080/api/users
+GET - http://localhost:8080/api/users/anshu
+GET - http://localhost:8080/api/users
+DELETE - http://localhost:8080/api/users/anshu
+PUT - http://localhost:8080/api/users/anshu
+
+//URLS FOR POST
+POST - http://localhost:8080/api/users/anshu/posts
+GET - http://localhost:8080/api/users/anshu/posts
+
+GET - http://localhost:8080/api/users/anshu/posts
+
+
+http://localhost:8080/api/posts/category/CSE
+
+
+http://localhost:8080/api/users/anshu/posts/9/comments
