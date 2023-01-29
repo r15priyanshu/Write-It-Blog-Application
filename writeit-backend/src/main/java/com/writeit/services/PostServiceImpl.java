@@ -86,7 +86,8 @@ public class PostServiceImpl implements PostService {
 				.orElseThrow(() -> new CustomException("Post not found with id :" + postid, HttpStatus.NOT_FOUND));
 		foundPost.setTitle(newpostdata.getTitle() == null ? foundPost.getTitle() : newpostdata.getTitle());
 		foundPost.setContent(newpostdata.getContent() == null ? foundPost.getContent() : newpostdata.getContent());
-		foundPost.setImage(newpostdata.getImage() == null ? foundPost.getImage() : newpostdata.getImage());
+		System.out.println(newpostdata.getImage());
+		foundPost.setImage(foundPost.getImage());
 		return postRepository.save(foundPost);
 	}
 
