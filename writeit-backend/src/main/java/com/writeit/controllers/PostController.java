@@ -7,17 +7,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.engine.jdbc.StreamUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +32,10 @@ import com.writeit.dto.PostResponseDto;
 import com.writeit.entities.Post;
 import com.writeit.exceptions.ApiResponse;
 import com.writeit.exceptions.CustomException;
-import com.writeit.repositories.PostRepository;
 import com.writeit.services.FileService;
 import com.writeit.services.PostService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api")
