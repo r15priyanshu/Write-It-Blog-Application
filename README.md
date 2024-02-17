@@ -35,5 +35,10 @@ create database writeit;
 
 #### RECENT/ADDITIONAL CHANGES :
 * You can now open the Swagger Documentation at : http://localhost:8080/swagger-ui/index.html
+* Docker File and Docker Compose File has been attached. Move to the writeit-backend folder and run below command :
+  ```
+  docker compose -p "write-it" up --build
+  ```
+
 
 Enjoy Write-It Blog Application !! 😊
