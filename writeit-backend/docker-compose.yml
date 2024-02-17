@@ -1,0 +1,63 @@
+version: "3.9"
+
+#Defining Custom Network
+networks:
+  writeit-network:
+    name: writeit-network
+    driver: bridge
+
+#Defining Custom Volumes    
+volumes:
+  writeit-database-data:
+    name: writeit-database-data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: D:\DockerVolumes\writeit\mysql-data\
+      
+  writeit-backend-data:
+    name: writeit-backend-data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: D:\DockerVolumes\writeit\backend-data\
+
+#Defining Services Of Our Application
+
+services:      
+  writeit-backend: #name that can be reffered inside this file
+    build: .
+    image: r15priyanshu/writeit-backend:latest
+    restart: always
+    container_name: writeit-backend-instance
+    networks: 
+      - writeit-network
+    ports:
+      - 8080:8080
+    volumes:
+      - writeit-backend-data:/app/writeit/ 
+    environment:
+      MYSQL_HOST: writeit-mysql-instance #container name of mysql in the same network
+      MYSQL_PORT: 3306 #port on which mysql is running inside the container
+      JAVA_OPTS: -Dspring.profiles.active=prd
+    depends_on:
+      - writeit-database
+      
+  writeit-database:
+    image: mysql:8.0.36
+    container_name: writeit-mysql-instance
+    networks:
+      - writeit-network
+    ports:
+      - 4406:3306
+    volumes:
+      - writeit-database-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root #This sets the password of the root user
+      MYSQL_DATABASE: writeit #This creates the database also when first time instance is created
+      
+
+  
+  
