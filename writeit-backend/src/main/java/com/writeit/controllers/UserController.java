@@ -1,23 +1,16 @@
 package com.writeit.controllers;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
-
-
+import org.apache.tika.Tika;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,27 +20,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.writeit.constants.GlobalConstants;
 import com.writeit.dto.UserDto;
 import com.writeit.entities.User;
 import com.writeit.exceptions.ApiResponse;
 import com.writeit.exceptions.CustomException;
-import com.writeit.services.FileService;
 import com.writeit.services.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
 public class UserController {
-	@Value("${writeit.images.userprofiles}")
-	String userprofileimagepath;
-	
-	@Autowired
-	UserService userService;
-	
-	@Autowired
-	FileService fileService;
 
 	@Autowired
-	ModelMapper modelMapper;
+	private UserService userService;
+
+	@Autowired
+	private ModelMapper modelMapper;
 
 	// GET SINGLE USER
 	@GetMapping("/users/{username}")
@@ -57,26 +47,34 @@ public class UserController {
 	}
 
 	// SERVE USER IMAGE
-	@GetMapping(value = "/images/serveuserimage/{imagename}", produces = MediaType.IMAGE_JPEG_VALUE)
-	public void serveImage(@PathVariable("imagename") String imagename, HttpServletResponse response) {
-
-		try {
-			InputStream is = fileService.serveImage(userprofileimagepath, imagename);
-			response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-			StreamUtils.copy(is, response.getOutputStream());
-
-		} catch (FileNotFoundException e) {
-			throw new CustomException("File Not Found with the name:" + imagename, HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			e.printStackTrace();
+	@GetMapping(value = "/images/serveuserimage/{username}")
+	public ResponseEntity<byte[]> serveUserProfileImage(@PathVariable("username") String username) {
+		User foundUser = userService.getUserByUsername(username);
+		if (foundUser.getProfilepic().equals(GlobalConstants.DEFAULT_PROFILE_IMAGE_NAME)) {
+			throw new CustomException("Default Image is Set , Will Be Taken from frontend : "
+					+ GlobalConstants.DEFAULT_PROFILE_IMAGE_NAME, HttpStatus.OK);
 		}
+		// Detect MIME type of image data
+		String contentType = new Tika().detect(foundUser.getImageData());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType(contentType));
+		return new ResponseEntity<>(foundUser.getImageData(), headers, HttpStatus.OK);
 	}
 
 	// UPDATE SINGLE USER
 	@PutMapping("/users/{username}")
 	public ResponseEntity<UserDto> updateSingleUser(@RequestBody User user, @PathVariable String username) {
 		User updateduser = userService.updateUserByUsername(user, username);
-		return new ResponseEntity<UserDto>(modelMapper.map(user, UserDto.class), HttpStatus.OK);
+		return new ResponseEntity<UserDto>(modelMapper.map(updateduser, UserDto.class), HttpStatus.OK);
+	}
+
+	// DELETE ALL USERS
+	@DeleteMapping("/users")
+	public ResponseEntity<ApiResponse> deleteAllUsers() {
+		userService.deleteAllUsers();
+		ApiResponse apiResponse = new ApiResponse("All Users Deleted Successfully !!", LocalDateTime.now(),
+				HttpStatus.OK, HttpStatus.OK.value());
+		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
 	}
 
 	// DELETE SINGLE USER
