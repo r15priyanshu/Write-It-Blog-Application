@@ -3,7 +3,10 @@ package com.writeit.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.writeit.constants.GlobalConstants;
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,8 +31,11 @@ public class Post {
 	private String title;
 	@Lob
 	private String content;
-	private String image="defaultpostimage.jpg";
+	private String image=GlobalConstants.DEFAULT_POST_IMAGE_NAME;
 	private Date date;
+	@Lob
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] imageData;
 	
 	@ManyToOne
 	@JoinColumn(name = "cid")

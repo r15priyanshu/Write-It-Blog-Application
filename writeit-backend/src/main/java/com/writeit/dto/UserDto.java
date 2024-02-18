@@ -18,5 +18,6 @@ public class UserDto {
 	private String password;
 	private String about;
 	private String profilepic;
+	private String imageData;
 	private List<Role> roles;
 }

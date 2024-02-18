@@ -3,9 +3,6 @@ package com.writeit.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.writeit.entities.Category;
-import com.writeit.entities.User;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +15,7 @@ public class PostDto {
 	private String content;
 	private String image;
 	private Date date;
+	private byte[] imageData;
 	private CategoryDto category;
 	private UserDto user;
 	private List<CommentDto> comments;
