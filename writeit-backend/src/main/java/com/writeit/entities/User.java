@@ -3,6 +3,8 @@ package com.writeit.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.writeit.constants.GlobalConstants;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
@@ -38,12 +41,15 @@ public class User {
 	@Size(min = 5,max = 20,message = "Password must be of length in between 5-20")
 	private String password;
 	private String about;
-	private String profilepic="default.jpg";
+	private String profilepic=GlobalConstants.DEFAULT_PROFILE_IMAGE_NAME;
+	@Lob
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] imageData;
 	
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Post> allposts=new ArrayList<>();
 	
-	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role",joinColumns =@JoinColumn(name="uid",referencedColumnName = "uid"),inverseJoinColumns = @JoinColumn(name="rid",referencedColumnName = "rid"))
 	private List<Role> roles;
 	

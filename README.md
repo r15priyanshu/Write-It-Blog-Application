@@ -22,16 +22,23 @@ Write-It Blog Application is a software program that enables users to easily cre
 ### QUICK GUIDE/STEPS TO RUN THE PROJECT:
 1. Clone the project.
 2. Download "STS [ Spring Tool Suite ] IDE and Configure It.
-3. Download/Install/Configure Java 8 or above.
-4. Download and install MySQL installer community [ Workbench, MySQL command line ,MySQL Server ]
-5. Download and Configure Tomcat 9.0 [ Optional ].
-6. The Projects needs to have database created as below and rest of the table creation will be taken care by Hibernate itself : 
+3. Download/Install/Configure Java 17 or above.
+4. Download and install "mysql-installer-community-8.0.36.0" [ MySQL Workbench, MySQL command line, MySQL Server ]
+5. The Projects needs to have database created as below and rest of the table creation will be taken care by Hibernate itself : 
 
 ```
 create database writeit;
 ```
-7. Open STS IDE and import the cloned Project [writeit-backend] , Run the project as SpringBoot App.
-8. Install NodeJS and Node Package Manager, Move inside [writeit-frontend] folder and open it in vscode and Run npm install , npm start
-9. Visit http://localhost:3000/home for home page in your browser.
+6. Open STS IDE and import the cloned Project [writeit-backend] , Run the project as SpringBoot App.
+7. Install NodeJS and Node Package Manager, Move inside [writeit-frontend] folder and open it in vscode and Run npm install , npm start
+8. Visit http://localhost:3000/home for home page in your browser.
+
+#### RECENT/ADDITIONAL CHANGES :
+* You can now open the Swagger Documentation at : http://localhost:8080/swagger-ui/index.html
+* Docker File and Docker Compose File has been attached. Move to the writeit-backend folder and run below command :
+  ```
+  docker compose -p "write-it" up --build
+  ```
+
 
 Enjoy Write-It Blog Application !! 😊

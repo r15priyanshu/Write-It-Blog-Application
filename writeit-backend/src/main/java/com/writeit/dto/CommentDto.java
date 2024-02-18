@@ -2,8 +2,6 @@ package com.writeit.dto;
 
 import java.util.Date;
 
-import com.writeit.entities.User;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

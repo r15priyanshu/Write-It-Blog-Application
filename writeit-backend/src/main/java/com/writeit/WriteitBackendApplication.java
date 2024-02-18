@@ -1,13 +1,12 @@
 package com.writeit;
 
-import java.nio.file.Paths;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.writeit.constants.GlobalConstants;
 import com.writeit.entities.Category;
 import com.writeit.entities.Role;
 import com.writeit.repositories.CategoryRepository;
@@ -36,14 +35,14 @@ public class WriteitBackendApplication implements ApplicationRunner{
 		if(roleRepository.findById(1).isEmpty()) {
 			role=new Role();
 			role.setRid(1);
-			role.setRole("NORMAL");
+			role.setRoleName(GlobalConstants.ROLE_NORMAL);
 			roleRepository.save(role);
 		}
 		
 		if(roleRepository.findById(2).isEmpty()) {
 			role=new Role();
 			role.setRid(2);
-			role.setRole("ADMIN");
+			role.setRoleName(GlobalConstants.ROLE_ADMIN);
 			roleRepository.save(role);
 		}
 		
