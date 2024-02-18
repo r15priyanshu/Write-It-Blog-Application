@@ -48,7 +48,7 @@ function Login(props) {
           setUserState({ data:{...user},loggedIn:true });
           navigate("/user/" + user.username + "/profile");
         });
-        toast.success("Login Successfull for username : " + user.username);
+        toast.success("Login Successful for username : " + user.username);
       })
       .catch((error) => {
         console.log(error.response.data);

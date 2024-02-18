@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 export const BASEURL = "http://localhost:8080";
 export const POST_IMAGE_SERVE_URL=BASEURL+"/api/images/servepostimage"
+export const DEFAULT_PROFILE_IMAGE_NAME="default.jpg";
+export const DEFAULT_POST_IMAGE_NAME="defaultpostimage.jpg";
 export const myaxios = axios.create({ baseURL: BASEURL });
 
 export function CustomTextColorWrapper(props) {
