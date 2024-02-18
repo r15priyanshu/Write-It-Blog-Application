@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { Card, CardBody, Table } from "reactstrap";
 import BaseComponent from "../components/BaseComponent";
 import { FetchUserDetailsFunc } from "../services/user-service";
-import { BASEURL } from "../services/helper";
+import { BASEURL, DEFAULT_PROFILE_IMAGE_NAME } from "../services/helper";
+import defaultprofileimage from "../images/default.png"
 
 function Profile() {
   const { username } = useParams();
@@ -30,7 +31,7 @@ function Profile() {
                 <div className="container text-center mb-3">
                   {profileData && (
                     <img
-                      src={`${BASEURL}/api/images/serveuserimage/${profileData?.profilepic}`}
+                      src={profileData?.profilepic === DEFAULT_PROFILE_IMAGE_NAME?defaultprofileimage:`${BASEURL}/api/images/serveuserimage/${profileData?.username}`}
                       alt="Profile Picture"
                       height={"150px"}
                       width={"150px"}
