@@ -15,6 +15,7 @@ import {
   POST_IMAGE_SERVE_URL,
   CustomDateFormatterFunc,
   CustomTextColorWrapper,
+  DEFAULT_POST_IMAGE_NAME,
 } from "../services/helper";
 import {
   AddNewCommentToPostFunc,
@@ -23,6 +24,7 @@ import {
 
 import UserContext from "../context/UserContext";
 import { toast } from "react-toastify";
+import defaultpostimage from "../images/defaultpostimage.jpg"
 
 function FullPostView() {
   const { userState } = useContext(UserContext);
@@ -87,7 +89,7 @@ function FullPostView() {
                 <div className="container text-center">
                   {post.image && (
                     <img
-                      src={`${POST_IMAGE_SERVE_URL}/${post?.image}`}
+                      src={post.image === DEFAULT_POST_IMAGE_NAME?defaultpostimage:`${POST_IMAGE_SERVE_URL}/${post?.pid}`}
                       alt="defaultimage"
                       height={"350px"}
                       width={"350px"}

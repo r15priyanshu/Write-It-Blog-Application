@@ -13,7 +13,9 @@ import {
   POST_IMAGE_SERVE_URL,
   CustomDateFormatterFunc,
   CustomTextColorWrapper,
+  DEFAULT_POST_IMAGE_NAME,
 } from "../services/helper";
+import defaultpostimage from "../images/defaultpostimage.jpg"
 
 function PostView({ post, handlePostDelete }) {
   const { userState } = useContext(UserContext);
@@ -21,8 +23,8 @@ function PostView({ post, handlePostDelete }) {
     <div className="PostView mb-3">
       <Card>
         <img
-          alt={`${POST_IMAGE_SERVE_URL}/${post.image}`}
-          src={`${POST_IMAGE_SERVE_URL}/${post.image}`}
+          alt={post.image === DEFAULT_POST_IMAGE_NAME?defaultpostimage:`${POST_IMAGE_SERVE_URL}/${post.image}`}
+          src={post.image === DEFAULT_POST_IMAGE_NAME?defaultpostimage:`${POST_IMAGE_SERVE_URL}/${post.pid}`}
           height="200px"
         />
         <CardBody>
